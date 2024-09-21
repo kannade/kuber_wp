@@ -12,18 +12,32 @@ spec:
     tier: mysql
   clusterIP: None
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim
-  labels:
-    app: wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mysql-pv-volume
+#   labels:
+#     app: wordpress
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/mnt/mysql-data"
+---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: mysql-pv-claim
+#   labels:
+#     app: wordpress
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -66,9 +80,13 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
+        # - name: mysql-persistent-storage
+        #   mountPath: /var/lib/mysql
+        - mountPath: /var/lib/mysql
+          name: mysql-volume
       volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+      - name: mysql-volume
+        emptyDir: {}
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName: mysql-pv-claim

@@ -14,18 +14,32 @@ spec:
     app: wordpress
     tier: frontend
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: wp-pv-claim
-  labels:
-    app: wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: wp-pv-volume
+#   labels:
+#     app: wordpress
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/mnt/data"
+---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: wp-pv-claim
+#   labels:
+#     app: wordpress
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,9 +77,13 @@ spec:
         - containerPort: 80
           name: wordpress
         volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www/html
+        # - name: wordpress-persistent-storage
+        #   mountPath: /var/www/html
+        - mountPath: /var/www/html
+          name: wp-volume
       volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pv-claim
+      - name: wp-volume
+        emptyDir: {}
+      # - name: wordpress-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName: wp-pv-claim

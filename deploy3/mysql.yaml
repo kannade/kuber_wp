@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: database
+        image: mysql:9.0.1 #5.7
+        args:
+          - "--ignore-db-dir=lost+found"
+        envFrom:
+          - secretRef:
+              name: wp-db-secrets
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+        # resources:
+        #   requests:
+        #     memory: "500Mi"
+        #     cpu: "250m"
+        #     ephemeral-storage: "1Gi"
+      volumes:
+      - name: mysql-data
+       # emptyDir: {}
+        persistentVolumeClaim:
+          claimName: mysql-volume

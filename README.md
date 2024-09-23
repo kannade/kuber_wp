@@ -8,3 +8,4 @@
 `create database wordpress;`\
 `exit`
 3. Пробросить порт 10.0.2.21:30080
+4. http://localhost:30080/

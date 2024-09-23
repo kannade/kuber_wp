@@ -15,6 +15,11 @@ spec:
       containers:
         - name: wordpress
           image: wordpress:6.6.2-php8.1-apache #5.8.3-php7.4-apache # 6.6.2-php8.1-apache
+          resources:
+            requests:
+              ephemeral-storage: "500Mi"
+            limits:
+              ephemeral-storage: "1Gi"
           ports:
           - containerPort: 80
             name: wordpress

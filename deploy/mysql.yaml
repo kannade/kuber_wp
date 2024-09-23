@@ -21,6 +21,19 @@ spec:
       #   volumeMounts:
       #   - name: mysql-data
       #     mountPath: /var/lib/mysql
+      # initContainers:
+      # - name: init-mysql
+      #   image: busybox
+      #   command: ['sh', '-c', 'sleep 10; mysql -h mysql -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS wordpress;"']
+      #   env:
+      #     - name: MYSQL_ROOT_PASSWORD
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: wp-db-secrets
+      #           key: MYSQL_ROOT_PASSWORD
+      #   volumeMounts:
+      #   - name: mysql-data
+      #     mountPath: /var/lib/mysql
       containers:
       - name: database
         image: mysql:5.7 # 9.0.1 #5.7

@@ -7,6 +7,7 @@ resources:
   - mysql-volume.yaml
   - mysql.yaml
   - mysql-service.yaml
+  - wp-ds.yaml
   - wordpress-pv.yaml
   - wordpress-volume.yaml
   - wordpress.yaml

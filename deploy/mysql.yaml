@@ -42,16 +42,33 @@ spec:
         envFrom:
           - secretRef:
               name: wp-db-secrets
+        env:
+          - name: MYSQL_DATABASE
+            value: wordpress
+          - name: MYSQL_USER
+            value: user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wp-db-secrets
+                key: MYSQL_ROOT_PASSWORD
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wp-db-secrets
+                key: MYSQL_ROOT_PASSWORD
         ports:
           - containerPort: 3306
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
-        # resources:
-        #   requests:
-        #     memory: "500Mi"
-        #     cpu: "250m"
-        #     ephemeral-storage: "1Gi"
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+            ephemeral-storage: "1Gi"
+          limits:
+            ephemeral-storage: "2Gi"
       volumes:
       - name: mysql-data
        # emptyDir: {}

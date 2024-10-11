@@ -17,9 +17,9 @@ spec:
           image: wordpress:6.6.2-php8.1-apache #5.8.3-php7.4-apache # 6.6.2-php8.1-apache
           resources:
             requests:
-              ephemeral-storage: "500Mi"
-            limits:
               ephemeral-storage: "1Gi"
+            limits:
+              ephemeral-storage: "2Gi"
           ports:
           - containerPort: 80
             name: wordpress

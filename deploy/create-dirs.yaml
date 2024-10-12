@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: create-dirs
+spec:
+  selector:
+    matchLabels:
+      app: create-dirs
+  template:
+    metadata:
+      labels:
+        app: create-dirs
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["/bin/sh", "-c", "mkdir -p /mnt/wp-data /mnt/db-data && sleep 3600"]
+        volumeMounts:
+        - mountPath: /mnt/wp-data
+          name: host-wp-data
+        - mountPath: /mnt/db-data
+          name: host-db-data
+      volumes:
+      - name: host-wp-data
+        hostPath:
+          path: /mnt/wp-data
+          type: DirectoryOrCreate
+      - name: host-db-data
+        hostPath:
+          path: /mnt/db-data
+          type: DirectoryOrCreate

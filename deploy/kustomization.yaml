@@ -3,11 +3,11 @@ kind: Kustomization
 resources:
   - mysql-secret.yaml
   - sc.yaml
+  - create-dirs.yaml
   - mysql-pv.yaml
   - mysql-volume.yaml
   - mysql.yaml
   - mysql-service.yaml
-  - wp-ds.yaml
   - wordpress-pv.yaml
   - wordpress-volume.yaml
   - wordpress.yaml
